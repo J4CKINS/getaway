@@ -65,7 +65,7 @@ CREATE TABLE Gallery (
 
 -- The admin can add/update/remove hotel listings and images from the gallery
 CREATE TABLE Admin (
-    ID          INT NOT NULL UNIQUE AUTO_INCREMENT,
+    ID              INT NOT NULL UNIQUE AUTO_INCREMENT,
     Email           VARCHAR(255) NOT NULL,
     AccountPassword VARCHAR(255) NOT NULL, -- This will be hashed
     PRIMARY KEY (ID)
