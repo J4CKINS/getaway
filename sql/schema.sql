@@ -7,7 +7,7 @@ CREATE TABLE Customer (
     FirstName       VARCHAR(255) NOT NULL ,
     LastName        VARCHAR(255) NOT NULL,
     Email           VARCHAR(255) NOT NULL,
-    PhoneNumber     VARCHAR(127) NOT NULL,
+    PhoneNumber     VARCHAR(255) NOT NULL,
     AccountPassword VARCHAR(255) NOT NULL, -- This will be hashed
     PRIMARY KEY (ID)
 );
