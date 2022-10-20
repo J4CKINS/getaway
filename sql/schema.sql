@@ -15,15 +15,16 @@ CREATE TABLE Customer (
 -- Hotel listings shown on the website
 CREATE TABLE Hotel (
     ID INT NOT NULL UNIQUE AUTO_INCREMENT,
-    HotelName       VARCHAR(255) NOT NULL,
-    ContactNumber   VARCHAR(255) NOT NULL,
-    ContactEmail    VARCHAR(255) NOT NULL,
-    StreetAddress   VARCHAR(255) NOT NULL,
-    City            VARCHAR(255) NOT NULL,
-    Postcode        VARCHAR(255) NOT NULL,
-    Country         VARCHAR(255) NOT NULL,
-    Price           FLOAT NOT NULL,
-    AvailableRooms  INT NOT NULL,
+    HotelName           VARCHAR(255) NOT NULL,
+    HotelDescription    VARCHAR(1024) NOT NULL,
+    ContactNumber       VARCHAR(255) NOT NULL,
+    ContactEmail        VARCHAR(255) NOT NULL,
+    StreetAddress       VARCHAR(255) NOT NULL,
+    City                VARCHAR(255) NOT NULL,
+    Postcode            VARCHAR(255) NOT NULL,
+    Country             VARCHAR(255) NOT NULL,
+    Price               FLOAT NOT NULL,
+    AvailableRooms      INT NOT NULL,
     PRIMARY KEY (ID)
 );
 
@@ -56,9 +57,10 @@ CREATE TABLE Review (
 
 -- The gallery stores image urls to be displayed for each hotel listing
 CREATE TABLE Gallery (
-    ID          INT NOT NULL UNIQUE AUTO_INCREMENT,
-    HotelID     INT NOT NULL,
-    ImageURL    VARCHAR(255) NOT NULL,
+    ID              INT NOT NULL UNIQUE AUTO_INCREMENT,
+    HotelID         INT NOT NULL,
+    ImageURL        VARCHAR(255) NOT NULL,
+    PrimaryImage    BOOLEAN NOT NULL,
     PRIMARY KEY (ID),
     FOREIGN KEY(HotelID) REFERENCES Hotel(ID)
 );
@@ -68,5 +70,13 @@ CREATE TABLE Admin (
     ID              INT NOT NULL UNIQUE AUTO_INCREMENT,
     Email           VARCHAR(255) NOT NULL,
     AccountPassword VARCHAR(255) NOT NULL, -- This will be hashed
+    PRIMARY KEY (ID)
+);
+
+CREATE TABLE SupportRequest (
+    ID INT NOT NULL UNIQUE AUTO_INCREMENT,
+    Email VARCHAR(255) NOT NULL,
+    RequestSubject VARCHAR(255) NOT NULL,
+    RequestMessage VARCHAR(2048) NOT NULL,
     PRIMARY KEY (ID)
 );
