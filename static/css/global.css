@@ -103,4 +103,5 @@ button, .button {
     border-radius: 0px;
     color: #fff;
     background-color: #000;
+    cursor: pointer;
 }
