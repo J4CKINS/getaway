@@ -22,6 +22,9 @@ h3 {
 p {
     font-size: 16px;
 }
+a {
+    color: #0097e6;
+}
 
 @media only screen and (max-width: 500px) {
     h1 {
