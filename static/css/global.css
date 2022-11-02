@@ -37,6 +37,7 @@ p {
 
 nav {
     display: flex;
+    z-index: 999;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
@@ -85,4 +86,10 @@ nav #account-icon {
     nav #account-icon {
         display: inline;
     }
+}
+
+footer {
+    width: 100%;
+    height: 200px;
+    background-color: #000;
 }
