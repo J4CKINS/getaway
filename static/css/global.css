@@ -93,3 +93,11 @@ footer {
     height: 200px;
     background-color: #000;
 }
+
+button, .button {
+    padding: 5px;
+    font-size: 20px;
+    border-radius: 0px;
+    color: #fff;
+    background-color: #000;
+}
