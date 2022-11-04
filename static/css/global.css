@@ -73,12 +73,37 @@ nav #nav-menu-icon {
     display: none;
 }
 nav #account-icon {
+    cursor: pointer;
     display: none;
+}
+
+#mobile-nav {
+    display: none;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    z-index: 999;
+    width: 100%;
+    background-color: #000;
+    border-top: 1px solid #fff;
+}
+#mobile-nav * {
+    cursor: pointer;
+}
+#mobile-nav a {
+    margin: 20px 0px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
 }
 
 @media only screen and (max-width: 650px) {
     nav ul {
         display: none;
+    }
+    nav #title {
+        font-size: 26px;
     }
     nav #account-button {
         display: none;
