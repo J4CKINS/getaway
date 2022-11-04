@@ -6,7 +6,6 @@
             <li class="clickable">Hotels</li>
             <li class="clickable">Contact Us</li>
         </ul>
-        <p id="account-button" class="clickable">Account</p>
         <span>
         <img id="nav-menu-icon" src="/static/img/icons/nav_menu_white.svg" onclick="toggleMobileNav();"/>
         <img id="account-icon" src="/static/img/icons/account_icon_white.svg"/>

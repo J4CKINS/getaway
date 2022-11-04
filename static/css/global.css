@@ -71,10 +71,11 @@ nav li {
 }
 nav #nav-menu-icon {
     display: none;
+    cursor: pointer;
 }
 nav #account-icon {
     cursor: pointer;
-    display: none;
+    display: inline;
 }
 
 #mobile-nav {
@@ -104,9 +105,6 @@ nav #account-icon {
     }
     nav #title {
         font-size: 26px;
-    }
-    nav #account-button {
-        display: none;
     }
     nav #nav-menu-icon {
         display: inline;
