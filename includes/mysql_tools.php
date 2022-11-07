@@ -37,5 +37,12 @@ function fetchCustomerData($ID=null, $email=null) {
 
         return $results->fetch_assoc();
     }
-}  
+}
+
+function deleteCustomerAccount($ID) {
+    $conn = database_connect();
+
+    $query = "DELETE FROM `Customer` WHERE `ID` = $ID;";
+    $conn->query($query);
+}
 ?>
