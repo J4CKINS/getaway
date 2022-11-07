@@ -1,0 +1,37 @@
+.hotel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 20px 0px;
+    padding: 20px;
+    background-color: #ebebeb;
+    box-shadow: 4px 4px 4px #00000077;
+}
+.hotel .controls {
+    width: fit-content;
+}
+.hotel .controls * {
+    display: inline;
+}
+.hotel .controls button {
+    padding: 5px 20px;
+    font-size: 24px;
+    border: none;
+}
+
+.edit {
+    background-color: #273c75;
+}
+
+.delete {
+    background-color: #c23616;
+}
+
+@media only screen and (max-width: 650px) {
+    .hotel {
+        flex-direction: column;
+        align-content: center;
+    }
+}
