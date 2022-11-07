@@ -96,4 +96,54 @@ function adminAccountExists($ID) {
     }
     return false;
 }
+
+
+function fetchHotelData($ID) {
+    $conn = database_connect();
+    $query = "SELECT * FROM `Hotel` WHERE `ID` = $ID;";
+    $results = $conn->query($query);
+
+    if ($results->num_rows < 1) {
+        return null;
+    }
+    return $results->fetch_assoc();
+}
+
+function hotelExists($ID) {
+    $conn = database_connect();
+    $query = "SELECT `ID` FROM `Hotel` WHERE `ID` = $ID;";
+    $results = $conn->query($query);
+
+    if ($results->num_rows > 0) {
+        return true;
+    }
+    return false;
+}
+
+function createHotel($hotelName, $hotelDescription, $contactNumber, $contactEmail, $streetAddress, $city, $postCode, $country, $price, $availableRooms) {
+    $conn = database_connect();
+    $query = "INSERT INTO `Hotel` ";
+    $query .= "(`HotelName`, `HotelDescription`, `ContactNumber`, `ContactEmail`, `StreetAddress`, `City`, `Postcode`, `Country`, `Price`, `AvailableRooms`) ";
+    $query .= "VALUES ('$hotelName', '$hotelDescription', '$contactNumber', '$contactEmail', '$streetAddress', '$city', '$postCode', '$country', '$price', '$availableRooms');";
+
+    $conn->query($query);
+}
+
+function updateHotel($ID, $hotelName, $hotelDescription, $contactNumber, $contactEmail, $streetAddress, $city, $postCode, $country, $price, $availableRooms) {
+    $conn = database_connect();
+    $query = "UPDATE `Hotel` SET ";
+    $query .= "`HotelName` = '$hotelName', ";
+    $query .= "`HotelDescription` = '$hotelDescription', ";
+    $query .= "`ContactNumber` = '$contactNumber', ";
+    $query .= "`ContactEmail` = '$contactEmail', ";
+    $query .= "`StreetAddress` = '$streetAddress', ";
+    $query .= "`City` = '$city', ";
+    $query .= "`Postcode` = '$postCode', ";
+    $query .= "`Country` = '$country', ";
+    $query .= "`Price` = $price, ";
+    $query .= "`AvailableRooms` = $availableRooms ";
+    $query .= "WHERE `ID` = $ID";
+
+    $conn->query($query);
+}
 ?>
