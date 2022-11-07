@@ -38,6 +38,22 @@ a {
     }
 }
 
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+section {
+    width: 1400px;
+    max-width: 100%;
+    margin-top: 100px;
+    padding: 0px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 nav {
     display: flex;
     z-index: 999;
