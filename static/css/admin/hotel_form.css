@@ -1,0 +1,21 @@
+form {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    max-width: 100%;
+    padding: 10px;
+}
+form * {
+    margin: 10px 0px;
+}
+input, textarea {
+    width: 600px;
+    max-width: 100%;
+    padding: 5px;
+}
+textarea {
+    resize: vertical;
+    max-height: 300px;
+    min-height: 100px;
+    height: 300px;
+}
