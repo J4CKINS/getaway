@@ -85,4 +85,15 @@ function fetchAdminData($ID = null, $email = null) {
     }
     return null;
 }
+
+function adminAccountExists($ID) {
+    $conn = database_connect();
+    $query = "SELECT `ID` FROM `Admin` WHERE `ID` = $ID;";
+    $results = $conn->query($query);
+    
+    if ($results->num_rows > 0) {
+        return true;
+    }
+    return false;
+}
 ?>
