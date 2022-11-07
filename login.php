@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Add user ID to the session
-    $_SESSION["accountID"] = $accountData[0];
+    $_SESSION["customerID"] = $accountData[0];
     header("Location: /");
 }
 ?>
