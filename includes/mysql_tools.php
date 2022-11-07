@@ -37,6 +37,7 @@ function fetchCustomerData($ID=null, $email=null) {
 
         return $results->fetch_assoc();
     }
+    return null;
 }
 
 function deleteCustomerAccount($ID) {
@@ -55,5 +56,33 @@ function customerAccountExists($ID) {
         return true;
     }
     return false;
+}
+
+
+function fetchAdminData($ID = null, $email = null) {
+    $conn = database_connect(); // Connect to the database
+    
+    // Search by ID
+    if ($ID) {
+        $query = "SELECT * FROM `Admin` WHERE `ID` = $ID;";
+        $results = $conn->query($query);
+        
+        // Return null if no results are found
+        if ($results->num_rows < 1) { return null; }
+
+        return $results->fetch_assoc();
+    }
+
+    // Search by Email
+    elseif ($email) {
+        $query = "SELECT * FROM `Admin` WHERE `Email` = '$email';";
+        $results = $conn->query($query);
+
+        // Return null if no results are found
+        if ($results->num_rows < 1) { return null; }
+
+        return $results->fetch_assoc();
+    }
+    return null;
 }
 ?>
