@@ -85,6 +85,10 @@ nav li {
     font-size: 20px;
     display: inline;
 }
+nav li a {
+    color: #fff;
+    text-decoration: none;
+}
 nav #nav-menu-icon {
     display: none;
     cursor: pointer;
