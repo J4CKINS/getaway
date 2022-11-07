@@ -157,4 +157,10 @@ function updateHotel($ID, $hotelName, $hotelDescription, $contactNumber, $contac
 
     $conn->query($query);
 }
+
+function deleteHotel($ID) {
+    $conn = database_connect();
+    $query = "DELETE FROM `Hotel` WHERE `ID` = $ID;";
+    $conn->query($query);
+}
 ?>
