@@ -20,6 +20,7 @@ function fetchCustomerData($ID=null, $email=null) {
     if ($ID) {
         $query = "SELECT * FROM `Customer` WHERE `ID` = $ID;";
         $results = $conn->query($query);
+        $conn->close();
         
         // Return null if no results are found
         if ($results->num_rows < 1) { return null; }
@@ -31,6 +32,7 @@ function fetchCustomerData($ID=null, $email=null) {
     elseif ($email) {
         $query = "SELECT * FROM `Customer` WHERE `Email` = '$email';";
         $results = $conn->query($query);
+        $conn->close();
 
         // Return null if no results are found
         if ($results->num_rows < 1) { return null; }
@@ -45,12 +47,14 @@ function deleteCustomerAccount($ID) {
 
     $query = "DELETE FROM `Customer` WHERE `ID` = $ID;";
     $conn->query($query);
+    $conn->close();
 }
 
 function customerAccountExists($ID) {
     $conn = database_connect();
     $query = "SELECT `ID` FROM `Customer` WHERE `ID` = $ID;";
     $results = $conn->query($query);
+    $conn->close();
     
     if ($results->num_rows > 0) {
         return true;
@@ -66,7 +70,7 @@ function fetchAdminData($ID = null, $email = null) {
     if ($ID) {
         $query = "SELECT * FROM `Admin` WHERE `ID` = $ID;";
         $results = $conn->query($query);
-        
+        $conn->close();
         // Return null if no results are found
         if ($results->num_rows < 1) { return null; }
 
@@ -77,7 +81,7 @@ function fetchAdminData($ID = null, $email = null) {
     elseif ($email) {
         $query = "SELECT * FROM `Admin` WHERE `Email` = '$email';";
         $results = $conn->query($query);
-
+        $conn->close();
         // Return null if no results are found
         if ($results->num_rows < 1) { return null; }
 
@@ -90,7 +94,8 @@ function adminAccountExists($ID) {
     $conn = database_connect();
     $query = "SELECT `ID` FROM `Admin` WHERE `ID` = $ID;";
     $results = $conn->query($query);
-    
+    $conn->close();
+
     if ($results->num_rows > 0) {
         return true;
     }
@@ -102,6 +107,7 @@ function fetchAllHotels() {
     $conn = database_connect();
     $query = "SELECT * FROM `Hotel`;";;
     $results = $conn->query($query);
+    $conn->close();
 
     if ($results->num_rows < 1) {
         return null;
@@ -113,7 +119,8 @@ function fetchHotelData($ID) {
     $conn = database_connect();
     $query = "SELECT * FROM `Hotel` WHERE `ID` = $ID;";
     $results = $conn->query($query);
-
+    $conn->close();
+    
     if ($results->num_rows < 1) {
         return null;
     }
@@ -124,7 +131,8 @@ function hotelExists($ID) {
     $conn = database_connect();
     $query = "SELECT `ID` FROM `Hotel` WHERE `ID` = $ID;";
     $results = $conn->query($query);
-
+    $conn->close();
+    
     if ($results->num_rows > 0) {
         return true;
     }
@@ -138,6 +146,7 @@ function createHotel($hotelName, $hotelDescription, $contactNumber, $contactEmai
     $query .= "VALUES ('$hotelName', '$hotelDescription', '$contactNumber', '$contactEmail', '$streetAddress', '$city', '$postCode', '$country', '$price', '$availableRooms');";
 
     $conn->query($query);
+    $conn->close();
 }
 
 function updateHotel($ID, $hotelName, $hotelDescription, $contactNumber, $contactEmail, $streetAddress, $city, $postCode, $country, $price, $availableRooms) {
@@ -156,11 +165,13 @@ function updateHotel($ID, $hotelName, $hotelDescription, $contactNumber, $contac
     $query .= "WHERE `ID` = $ID";
 
     $conn->query($query);
+    $conn->close();
 }
 
 function deleteHotel($ID) {
     $conn = database_connect();
     $query = "DELETE FROM `Hotel` WHERE `ID` = $ID;";
     $conn->query($query);
+    $conn->close();
 }
 ?>
