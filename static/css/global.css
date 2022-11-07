@@ -47,7 +47,7 @@ a {
 section {
     width: 1400px;
     max-width: 100%;
-    margin-top: 100px;
+    margin: 50px 0px;
     padding: 0px 20px;
     display: flex;
     flex-direction: column;
