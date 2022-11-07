@@ -134,6 +134,7 @@ nav #account-icon {
     z-index: 999;
     position: fixed;
     width: fit-content;
+    min-width: 300px;
     padding: 10px 20px;
     background-color: #000;
     border-top: 1px solid #fff;
