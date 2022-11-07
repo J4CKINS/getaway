@@ -45,26 +45,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST["password"];
 
     // Fetch account from database
-    $conn = database_connect();
-    $query = "SELECT `ID`, `AccountPassword` FROM `Customer` WHERE `Email` = '$email';";
-    $results = $conn->query($query);
+    $accountData = fetchCustomerData(email: $email);
     
     // Check if any results were found
-    if ($results->num_rows < 1) {
+    if ($accountData === null) {
         error("Email or password is incorrect.");
         return;
     }
-
-    $accountData = $results->fetch_array();
     
     // Check if password matches
-    if (!password_verify($password,$accountData[1])) {
+    if (!password_verify($password,$accountData["AccountPassword"])) {
         error("Email or password is incorrect.");
         return;
     }
 
     // Add user ID to the session
-    $_SESSION["customerID"] = $accountData[0];
+    $_SESSION["customerID"] = $accountData["ID"];
     header("Location: /");
 }
 ?>
