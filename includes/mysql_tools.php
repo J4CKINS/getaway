@@ -45,4 +45,15 @@ function deleteCustomerAccount($ID) {
     $query = "DELETE FROM `Customer` WHERE `ID` = $ID;";
     $conn->query($query);
 }
+
+function customerAccountExists($ID) {
+    $conn = database_connect();
+    $query = "SELECT `ID` FROM `Customer` WHERE `ID` = $ID;";
+    $results = $conn->query($query);
+    
+    if ($results->num_rows > 0) {
+        return true;
+    }
+    return false;
+}
 ?>
