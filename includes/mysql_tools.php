@@ -98,6 +98,17 @@ function adminAccountExists($ID) {
 }
 
 
+function fetchAllHotels() {
+    $conn = database_connect();
+    $query = "SELECT * FROM `Hotel`;";;
+    $results = $conn->query($query);
+
+    if ($results->num_rows < 1) {
+        return null;
+    }
+    return $results->fetch_all(MYSQLI_ASSOC);
+}
+
 function fetchHotelData($ID) {
     $conn = database_connect();
     $query = "SELECT * FROM `Hotel` WHERE `ID` = $ID;";
