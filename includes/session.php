@@ -6,4 +6,11 @@ function customerLoggedIn() {
     }
     return false;
 }
+
+function adminLoggedIn() {
+    if(isset($_SESSION["adminID"])) {
+        return true;
+    }
+    return false;
+}
 ?>
