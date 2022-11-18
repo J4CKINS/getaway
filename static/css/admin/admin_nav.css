@@ -1,0 +1,22 @@
+#admin-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    z-index: 999;
+    width: 100%;
+    padding: 5px 20px;
+    background-color: #000;
+    color: #c23616;
+}
+#admin-nav ul {
+    padding: 0px;
+    list-style-type: none;
+}
+#admin-nav li {
+    display: inline;
+    margin: 0px 20px;
+}
+#admin-nav a {
+    color: #c23616;
+    text-decoration: none;
+}

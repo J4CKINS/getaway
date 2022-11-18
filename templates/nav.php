@@ -1,6 +1,12 @@
 <?php
 require_once(__DIR__ . "/../includes/session.php");
-require_once(__DIR__ . "/../includes/mysql_tools.php")
+require_once(__DIR__ . "/../includes/mysql_tools.php");
+require_once(__DIR__ . "/../includes/auth_admin.php");
+?>
+<?php
+if(authAdmin()) {
+    include __DIR__ . "/admin_nav.php";
+}
 ?>
 <div class="nav-container">
     <nav>
