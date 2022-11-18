@@ -174,4 +174,117 @@ function deleteHotel($ID) {
     $conn->query($query);
     $conn->close();
 }
+
+// GALLERY FUNCTIONS
+
+function imageExists($imageID) {
+    $conn = database_connect();
+    $query = "SELECT `ID` FROM `Gallery` WHERE `ID` = $imageID;";
+    $results = $conn->query($query);
+    $conn->close();
+
+    if ($results->num_rows > 0) {
+        return true;
+    }
+    return false;
+}
+
+function fetchTotalHotelImages($hotelID) {
+    $conn = database_connect();
+    $query = "SELECT COUNT(`ID`) FROM `Gallery` WHERE `HotelID` = $hotelID;";
+    $result = $conn->query($query);
+    $total = $result->fetch_column(0);
+    $conn->close();
+    return $total;
+}
+
+function fetchHotelImages($hotelID) {
+    $conn = database_connect();
+    $query = "SELECT * FROM `Gallery` WHERE `HotelID` = $hotelID;";
+    $results = $conn->query($query);
+    $conn->close();
+    return $results->fetch_all(MYSQLI_ASSOC);
+}
+
+function fetchImage($imageID) {
+    $conn = database_connect();
+    $query = "SELECT * FROM `Gallery` WHERE `ID` = $imageID;";
+    $results = $conn->query($query);
+    $conn->close();
+    return $results->fetch_assoc();
+}
+
+function uploadImage($hotelID, $imageURL) {
+    $conn = database_connect();
+    $query = "INSERT INTO `Gallery` ";
+    $query .= "(`HotelID`, `ImageURL`, `PrimaryImage`) ";
+    $query .= "VALUES($hotelID, '$imageURL', 0);";
+    $conn->query($query);
+    $conn->close();
+}
+
+function deleteImage($imageID) {
+    $conn = database_connect();
+    $query = "DELETE FROM `Gallery` WHERE `ID` = $imageID;";
+    $conn->query($query);
+    $conn->close();
+}
+
+function fetchHotelPrimaryImage($hotelID) {
+    $conn = database_connect();
+    $query = "SELECT * FROM `Gallery` WHERE `HotelID` = $hotelID AND `PrimaryImage` = 1;";
+    $results = $conn->query($query);
+    $conn->close();
+
+    // If no primary image is set, return first hotel image
+    if ($results->num_rows < 1) {
+        
+        // Fetch hotel images
+        $images = fetchHotelImages($hotelID);
+
+        // If there are no images found for the hotel
+        // Return error image in mysqli_assoc type of array for the gallery
+        if(count($images) < 1) {
+            return [
+                "ID" => 0,
+                "HotelID" => $hotelID,
+                "ImageURL" => "/static/img/no_hotel_images.png",
+                "PrimaryImage" => 0
+            ];
+        }
+
+        return $images[0]; // Return first image;
+    }
+
+    // Return primary image
+    return $results->fetch_assoc();
+}
+
+function isPrimaryImage($imageID, $hotelID) {
+    $conn = database_connect();
+    $query = "SELECT `PrimaryImage` FROM `Gallery` WHERE `ID` = $imageID AND `HotelID` = $hotelID;";
+    $results = $conn->query($query);
+    $primaryImage = $results->fetch_column(0);
+
+    if ($primaryImage == 1) {
+        return true;
+    }
+    return false;
+}
+
+function setPrimaryImage($imageID, $hotelID) {
+    $conn = database_connect();
+
+    // Set all images in hotel gallery to not primary
+    // This ensures that there aren't 2 primary images
+    $query = "UPDATE `Gallery` SET `PrimaryImage` = 0 WHERE `HotelID` = $hotelID;";
+    $conn->query($query);
+
+    // Set selected image to primary image
+    $query = "UPDATE `Gallery` SET `PrimaryImage` = 1 WHERE `ID` = $imageID;";
+    $conn->query($query);
+
+    $conn->close();
+}
+
 ?>
