@@ -1,0 +1,26 @@
+.gallery {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 20px 0px;
+    padding: 20px;
+    background-color: #ebebeb;
+    box-shadow: 4px 4px 4px #00000077;
+}
+
+.gallery button {
+    justify-self: right;
+    width: min-content;
+    padding: 10px 20px;
+}
+
+@media only screen and (max-width: 600px) {
+    .gallery {
+        flex-direction: column;
+    }
+    .gallery button {
+        margin-top: 10px;
+    }
+}
