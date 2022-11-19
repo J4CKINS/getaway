@@ -45,6 +45,10 @@ if (!isset($_SESSION["adminID"])) {
                     <input value="<?php echo $hotelData["AvailableRooms"]?>"  type="number" name="available_rooms" placeholder="Available Rooms" required/>
                     <button type="submit">Submit</button>
                 </form>
+                <form action="../gallery/edit.php">
+                    <input type="hidden" name="hotel" value="<?php echo $hotelData["ID"]; ?>"/>
+                    <button type="submit">View Images</button>
+                </form>
                 <?php else: ?>
                 <h1>New Hotel</h1>
                 <form method="post">
@@ -59,9 +63,6 @@ if (!isset($_SESSION["adminID"])) {
                     <input type="number" name="price" placeholder="Price/Night" required/>
                     <input type="number" name="available_rooms" placeholder="Available Rooms" required/>
                     <button type="submit">Submit</button>
-                </form>
-                <form>
-                    <button type="submit">View Images</button>
                 </form>
                 <?php endif; ?>
             </section>
