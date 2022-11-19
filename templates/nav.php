@@ -37,6 +37,11 @@ if(authAdmin()) {
             <a href="/login.php">Login</a>
             <a href="/signup.php">Sign up</a>
         <?php endif; ?>
+        <?php if(authAdmin()): ?>
+            <a href="/admin/logout.php">Admin Logout</a>
+        <?php else: ?>
+            <a href="/admin/login.php">Admin Login</a>
+        <?php endif; ?>
         <img src="/static/img/icons/expand_less_white.svg" onclick="toggleAccountMenu();"/>
     </div>
     </div>
