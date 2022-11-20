@@ -48,8 +48,11 @@
     color: #c23616;
     text-decoration: none;
 }
+#mobile-admin-nav #admin-menu-toggle {
+    cursor: pointer;
+}
 
-@media only screen and (max-width:700px) {
+@media only screen and (max-width:850px) {
     #admin-nav {
         display: none;
     }

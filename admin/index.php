@@ -23,6 +23,7 @@ if (!authAdmin()) {
             <section>
                 <h3><a href="hotels/">Hotel Manager</a></h3>
                 <h3><a href="gallery/">Gallery Manager</a></h3>
+                <h3><a href="support/">View Support Requests</a></h3>
                 <h3><a href="logout.php">Logout</a></h3>
             </section>
         </div>

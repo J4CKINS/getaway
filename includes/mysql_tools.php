@@ -300,4 +300,34 @@ function submitSupportRequest($customerEmail, $requestSubject, $requestMessage) 
     $conn->query($query);
     $conn->close();
 }
+
+function fetchAllSupportRequests($resolved=null) {
+    $conn = database_connect();
+
+    $query = "SELECT * FROM `SupportRequest`";
+
+    // Fetch only resolved support requests
+    if ($resolved === true) {
+        $query .= " WHERE `Resolved` = 1";
+    }
+    // Fetch only unresolved support requests
+    elseif ($resolved === false) {
+        $query .= " WHERE `Resolved` = 0";
+    }
+    $query .= ";";
+
+    $results = $conn->query($query);
+    $conn->close();
+    return $results->fetch_all(MYSQLI_ASSOC);
+}
+
+function fetchSupportRequestsByEmail($email) {
+    $conn = database_connect();
+
+    $query = "SELECT * FROM `SupportRequest` WHERE `Email` = '$email';";
+    $results = $conn->query($query);
+    $conn->close();
+
+    return $results->fetch_all(MYSQLI_ASSOC);
+}
 ?>

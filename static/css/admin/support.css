@@ -1,0 +1,102 @@
+#filter-options {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #000;
+}
+
+#filter-options .filter-controls-group {
+    display: flex;
+    flex-direction: row;
+}
+#filter-options .filter-controls-group form {
+    margin-right: 20px;
+}
+
+#filter-options .filter-controls-group form:last-child {
+    margin-right: 0px;
+}
+
+.support-request {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items:flex-end;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #ebebeb;
+}
+.support-request .info {
+    width: 70%;
+}
+.support-request .info h2 {
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.resolved {
+    font-weight: bold;
+    color: #44bd32;
+}
+.unresolved {
+    font-weight: bold;
+    color: #c23616;
+}
+
+@media only screen and (max-width: 800px) {
+    #filter-options {
+        flex-direction: column;
+    }
+    #filter-options .filter-controls-group {
+        flex-direction: column;
+        width: 100%;
+        margin-right: 0px;
+        margin-bottom: 10px;
+    }
+    #filter-options .filter-controls-group:last-child {
+        margin-bottom: 0px;
+    }
+    #filter-options .filter-controls-group form {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    #filter-options .filter-controls-group form * {
+        margin-bottom: 5px;
+    }
+    #filter-options .filter-controls-group form input {
+        font-size: 20px;
+    }
+    #filter-options .filter-controls-group form:last-child {
+        margin-bottom: 0px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .support-request {
+        flex-direction: column;
+        align-items: center;
+    }
+    .support-request * {
+        margin-bottom: 10px;
+    }
+    .support-request form {
+        margin-bottom: 0px;
+    }
+    .support-request .info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    .support-request h2 {
+        text-align: center;
+    }
+}
