@@ -1,9 +1,10 @@
 <?php
 include __DIR__ . "/../includes/session.php";
 include __DIR__ . "/../includes/mysql_tools.php";
+include __DIR__ . "/../includes/auth_customer.php";
 
 // Redirect to login screen if user is not logged in
-if (!customerLoggedIn()) { header("Location: /login.php"); }
+if (!authCustomer()) { header("Location: /login.php"); }
 
 // Fetch account data
 $accountData = fetchCustomerData(ID: $_SESSION["customerID"]);
@@ -61,7 +62,7 @@ if ($accountData === null) { header("Location: /login.php"); return; } // Redire
 </html>
 <?php
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
-    if (isset($_SESSION["customerID"])) {
+    if (authCustomer()) {
         deleteCustomerAccount($_SESSION["customerID"]);
         unset($_SESSION["customerID"]);
         header("Location: /");
