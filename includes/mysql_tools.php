@@ -287,4 +287,17 @@ function setPrimaryImage($imageID, $hotelID) {
     $conn->close();
 }
 
+
+// SUPPORT REQUEST FUNCTIONS
+
+function submitSupportRequest($customerEmail, $requestSubject, $requestMessage) {
+    $conn = database_connect();
+    
+    $query = "INSERT INTO `SupportRequest` ";
+    $query .= "(`Email`, `RequestSubject`, `RequestMessage`) ";
+    $query .= "VALUES ('$customerEmail', '$requestSubject', '$requestMessage');";
+
+    $conn->query($query);
+    $conn->close();
+}
 ?>
