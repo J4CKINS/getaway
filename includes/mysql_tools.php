@@ -354,4 +354,22 @@ function fetchSupportRequestsByEmail($email) {
 
     return $results->fetch_all(MYSQLI_ASSOC);
 }
+
+function resolveSupportRequest($ID) {
+    $conn = database_connect();
+
+    $query = "UPDATE `SupportRequest` SET `Resolved` = 1 WHERE `ID` = $ID;";
+    $conn->query($query);
+    
+    $conn->close();
+}
+
+function unresolveSupportRequest($ID) {
+    $conn = database_connect();
+
+    $query = "UPDATE `SupportRequest` SET `Resolved` = 0 WHERE `ID` = $ID;";
+    $conn->query($query);
+
+    $conn->close();
+}
 ?>
