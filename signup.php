@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Check if phone number or email already exist
-    $query = "SELECT `Email` `PhoneNumber` FROM `Customer` WHERE `Email` = '$email' OR `PhoneNumber` = '$phoneNumber'";
+    $query = "SELECT `Email`, `PhoneNumber` FROM `Customer` WHERE `Email` = '$email' OR `PhoneNumber` = '$phoneNumber'";
     $results = $conn->query($query);
     
     // Check if an error has occured
@@ -67,16 +67,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($results->num_rows > 0) {
-        if ($results->fetch_array()[0] == $email) {
+        if ($results->fetch_assoc()["Email"] === $email) {
             error("Sorry, this email is already in use");
+            return;
         } else {
             error("Sorry, this phone number is already in use");
+            return;
         }
     }
 
     //Check password is atleast 8 characters long
     if(strlen($password) < 8) {
         error("Password must contain atleast 8 characters.");
+        return;
     }
 
     //Save details to database
