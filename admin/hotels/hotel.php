@@ -1,8 +1,8 @@
 <?php
-include __DIR__ . "/../../includes/session.php";
 include __DIR__ . "/../../includes/mysql_tools.php";
+include __DIR__ . "/../../includes/auth_admin.php";
 
-if (!isset($_SESSION["adminID"])) {
+if (!authAdmin()) {
     header("Location: /admin/login.php");
 }
 ?>
@@ -72,7 +72,7 @@ if (!isset($_SESSION["adminID"])) {
 </html>
 <?php
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    if (isset($_SESSION["adminID"]) and adminAccountExists($_SESSION["adminID"])) {
+    if (authAdmin()) {
 
         // If hotel_ID is set update hotel
         if (isset($_POST["hotel_ID"]) and hotelExists($_POST["hotel_ID"])) {

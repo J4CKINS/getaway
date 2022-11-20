@@ -1,7 +1,8 @@
 <?php
-include __DIR__ . "/../../includes/session.php";
 include __DIR__ . "/../../includes/mysql_tools.php";
-if(!(adminLoggedIn() and adminAccountExists($_SESSION["adminID"]))) {
+include __DIR__ . "/../../includes/auth_admin.php";
+
+if(!authAdmin()) {
     header("Location: /admin/login.php");
     return;
 }
