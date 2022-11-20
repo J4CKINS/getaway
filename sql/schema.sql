@@ -74,9 +74,10 @@ CREATE TABLE Admin (
 );
 
 CREATE TABLE SupportRequest (
-    ID INT NOT NULL UNIQUE AUTO_INCREMENT,
-    Email VARCHAR(255) NOT NULL,
-    RequestSubject VARCHAR(255) NOT NULL,
-    RequestMessage VARCHAR(2048) NOT NULL,
+    ID              INT NOT NULL UNIQUE AUTO_INCREMENT,
+    Email           VARCHAR(255) NOT NULL,
+    RequestSubject  VARCHAR(255) NOT NULL,
+    RequestMessage  VARCHAR(2048) NOT NULL,
+    Resolved        BOOLEAN NOT NULL,
     PRIMARY KEY (ID)
 );
