@@ -287,6 +287,14 @@ function setPrimaryImage($imageID, $hotelID) {
     $conn->close();
 }
 
+function clearHotelGallery($hotelID) {
+    $conn = database_connect();
+
+    $query = "DELETE FROM `Gallery` WHERE `HotelID` = $hotelID";
+    $conn->query($query);
+
+    $conn->close();
+}
 
 // SUPPORT REQUEST FUNCTIONS
 
