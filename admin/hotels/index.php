@@ -6,6 +6,8 @@ if(!authAdmin()) {
     header("Location: /admin/login.php");
     return;
 }
+
+$hotels = fetchAllHotels();
 ?>
 <!DOCTYPE html>
 <html lang="en-GB">
@@ -24,24 +26,23 @@ if(!authAdmin()) {
                 <form method="get" action="hotel.php">
                     <button type="submit">New Hotel</button>
                 </form>
-                <?php
-                $hotels = fetchAllHotels();
-                foreach ($hotels as $hotel):
-                ?>
-                <div class="hotel">
-                    <h2><?php echo $hotel["HotelName"] ?></h2>
-                    <div class="controls">
-                        <form action="hotel.php" method="get">
-                            <input name="hotelID" type="hidden" value="<?php echo $hotel['ID'] ?>"/>
-                            <button type="submit" class="edit">Edit</button>
-                        </form>
-                        <form action="delete.php" method="post">
-                            <input name="hotelID" type="hidden" value="<?php echo $hotel['ID'] ?>"/>
-                            <button type="submit" class="delete">Delete</button>
-                        </form>
+                <?php if($hotels !== null): ?>
+                    <?php foreach ($hotels as $hotel): ?>
+                    <div class="hotel">
+                        <h2><?php echo $hotel["HotelName"] ?></h2>
+                        <div class="controls">
+                            <form action="hotel.php" method="get">
+                                <input name="hotelID" type="hidden" value="<?php echo $hotel['ID'] ?>"/>
+                                <button type="submit" class="edit">Edit</button>
+                            </form>
+                            <form action="delete.php" method="post">
+                                <input name="hotelID" type="hidden" value="<?php echo $hotel['ID'] ?>"/>
+                                <button type="submit" class="delete">Delete</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
-                <?php endforeach; ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </section>
             <?php include __DIR__ . "/../../templates/footer.php";?>
         </div>
