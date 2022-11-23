@@ -6,6 +6,50 @@ if (!authAdmin()) {
     header("Location: /admin/login.php");
 }
 ?>
+<?php
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if (authAdmin()) {
+
+        // If hotel_ID is set update hotel
+        if (isset($_POST["hotel_ID"]) and hotelExists($_POST["hotel_ID"])) {
+            updateHotel(
+                $_POST["hotel_ID"],
+                $_POST["hotel_name"],
+                $_POST["hotel_description"],
+                $_POST["contact_number"],
+                $_POST["contact_email"],
+                $_POST["street_address"],
+                $_POST["city"],
+                $_POST["postcode"],
+                $_POST["country"],
+                $_POST["price"],
+                $_POST["available_rooms"]
+            );
+            header("Location: /admin/hotels/");
+            return;
+        }
+        else {
+            // Create new hotel record
+            createHotel(
+                $_POST["hotel_name"],
+                $_POST["hotel_description"],
+                $_POST["contact_number"],
+                $_POST["contact_email"],
+                $_POST["street_address"],
+                $_POST["city"],
+                $_POST["postcode"],
+                $_POST["country"],
+                $_POST["price"],
+                $_POST["available_rooms"],
+            );
+            header("Location: /admin/hotels/");
+            return;
+        }
+    }
+    http_response_code(403);
+    return;
+}
+?>
 <!DOCTYPE html>
 <html lang="en-GB">
     <head>
@@ -70,47 +114,3 @@ if (!authAdmin()) {
         <?php include __DIR__ . "/../../templates/footer.php"?>
     </body>
 </html>
-<?php
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    if (authAdmin()) {
-
-        // If hotel_ID is set update hotel
-        if (isset($_POST["hotel_ID"]) and hotelExists($_POST["hotel_ID"])) {
-            updateHotel(
-                $_POST["hotel_ID"],
-                $_POST["hotel_name"],
-                $_POST["hotel_description"],
-                $_POST["contact_number"],
-                $_POST["contact_email"],
-                $_POST["street_address"],
-                $_POST["city"],
-                $_POST["postcode"],
-                $_POST["country"],
-                $_POST["price"],
-                $_POST["available_rooms"]
-            );
-            header("Location: /admin/hotels/");
-            return;
-        }
-        else {
-            // Create new hotel record
-            createHotel(
-                $_POST["hotel_name"],
-                $_POST["hotel_description"],
-                $_POST["contact_number"],
-                $_POST["contact_email"],
-                $_POST["street_address"],
-                $_POST["city"],
-                $_POST["postcode"],
-                $_POST["country"],
-                $_POST["price"],
-                $_POST["available_rooms"],
-            );
-            header("Location: /admin/hotels/");
-            return;
-        }
-    }
-    http_response_code(403);
-    return;
-}
-?>
