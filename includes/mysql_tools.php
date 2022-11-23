@@ -18,8 +18,11 @@ function fetchCustomerData($ID=null, $email=null) {
     
     // Search by ID
     if ($ID) {
-        $query = "SELECT * FROM `Customer` WHERE `ID` = $ID;";
-        $results = $conn->query($query);
+        $query = "SELECT * FROM `Customer` WHERE `ID` = ?;";
+        $query = $conn->prepare($query);
+        $query->bind_param("i", $ID);
+        $query->execute();
+        $results = $query->get_result();
         $conn->close();
         
         // Return null if no results are found
@@ -30,8 +33,11 @@ function fetchCustomerData($ID=null, $email=null) {
 
     // Search by Email
     elseif ($email) {
-        $query = "SELECT * FROM `Customer` WHERE `Email` = '$email';";
-        $results = $conn->query($query);
+        $query = "SELECT * FROM `Customer` WHERE `Email` = ?;";
+        $query = $conn->prepare($query);
+        $query->bind_param("s", $email);
+        $query->execute();
+        $results = $query->get_result();
         $conn->close();
 
         // Return null if no results are found
@@ -45,15 +51,20 @@ function fetchCustomerData($ID=null, $email=null) {
 function deleteCustomerAccount($ID) {
     $conn = database_connect();
 
-    $query = "DELETE FROM `Customer` WHERE `ID` = $ID;";
-    $conn->query($query);
+    $query = "DELETE FROM `Customer` WHERE `ID` = ?;";
+    $query = $conn->prepare($query);
+    $query->bind_param("i", $ID);
+    $query->execute();
     $conn->close();
 }
 
 function customerAccountExists($ID) {
     $conn = database_connect();
-    $query = "SELECT `ID` FROM `Customer` WHERE `ID` = $ID;";
-    $results = $conn->query($query);
+    $query = "SELECT `ID` FROM `Customer` WHERE `ID` = ?;";
+    $query = $conn->prepare($query);
+    $query->bind_param("i", $ID);
+    $query->execute();
+    $results = $query->get_result();
     $conn->close();
     
     if ($results->num_rows > 0) {
@@ -68,8 +79,11 @@ function fetchAdminData($ID = null, $email = null) {
     
     // Search by ID
     if ($ID) {
-        $query = "SELECT * FROM `Admin` WHERE `ID` = $ID;";
-        $results = $conn->query($query);
+        $query = "SELECT * FROM `Admin` WHERE `ID` = ?;";
+        $query = $conn->prepare($query);
+        $query->bind_param("i", $ID);
+        $query->execute();
+        $results = $query->get_result();
         $conn->close();
         // Return null if no results are found
         if ($results->num_rows < 1) { return null; }
@@ -79,8 +93,11 @@ function fetchAdminData($ID = null, $email = null) {
 
     // Search by Email
     elseif ($email) {
-        $query = "SELECT * FROM `Admin` WHERE `Email` = '$email';";
-        $results = $conn->query($query);
+        $query = "SELECT * FROM `Admin` WHERE `Email` = ?;";
+        $query = $conn->prepare($query);
+        $query->bind_param("s", $email);
+        $query->execute();
+        $results = $query->get_result();
         $conn->close();
         // Return null if no results are found
         if ($results->num_rows < 1) { return null; }
@@ -92,8 +109,11 @@ function fetchAdminData($ID = null, $email = null) {
 
 function adminAccountExists($ID) {
     $conn = database_connect();
-    $query = "SELECT `ID` FROM `Admin` WHERE `ID` = $ID;";
-    $results = $conn->query($query);
+    $query = "SELECT `ID` FROM `Admin` WHERE `ID` = ?;";
+    $query = $conn->prepare($query);
+    $query->bind_param("i", $ID);
+    $query->execute();
+    $results = $query->get_result();
     $conn->close();
 
     if ($results->num_rows > 0) {
@@ -117,8 +137,11 @@ function fetchAllHotels() {
 
 function fetchHotelData($ID) {
     $conn = database_connect();
-    $query = "SELECT * FROM `Hotel` WHERE `ID` = $ID;";
-    $results = $conn->query($query);
+    $query = "SELECT * FROM `Hotel` WHERE `ID` = ?;";
+    $query = $conn->prepare($query);
+    $query->bind_param("i", $ID);
+    $query->execute();
+    $results = $query->get_result();
     $conn->close();
     
     if ($results->num_rows < 1) {
@@ -129,8 +152,11 @@ function fetchHotelData($ID) {
 
 function hotelExists($ID) {
     $conn = database_connect();
-    $query = "SELECT `ID` FROM `Hotel` WHERE `ID` = $ID;";
-    $results = $conn->query($query);
+    $query = "SELECT `ID` FROM `Hotel` WHERE `ID` = ?;";
+    $query = $conn->prepare($query);
+    $query->bind_param("i", $ID);
+    $query->execute();
+    $results = $query->get_result();
     $conn->close();
     
     if ($results->num_rows > 0) {
@@ -143,35 +169,42 @@ function createHotel($hotelName, $hotelDescription, $contactNumber, $contactEmai
     $conn = database_connect();
     $query = "INSERT INTO `Hotel` ";
     $query .= "(`HotelName`, `HotelDescription`, `ContactNumber`, `ContactEmail`, `StreetAddress`, `City`, `Postcode`, `Country`, `Price`, `AvailableRooms`) ";
-    $query .= "VALUES ('$hotelName', '$hotelDescription', '$contactNumber', '$contactEmail', '$streetAddress', '$city', '$postCode', '$country', '$price', '$availableRooms');";
+    $query .= "VALUES (?,?,?,?,?,?,?,?,?,?);";
 
-    $conn->query($query);
+    $query = $conn->prepare($query);
+    $query->bind_param("ssssssssdi", $hotelName, $hotelDescription, $contactNumber, $contactEmail, $streetAddress, $city, $postCode, $country, $price, $availableRooms);
+
+    $query->execute();
     $conn->close();
 }
 
 function updateHotel($ID, $hotelName, $hotelDescription, $contactNumber, $contactEmail, $streetAddress, $city, $postCode, $country, $price, $availableRooms) {
     $conn = database_connect();
     $query = "UPDATE `Hotel` SET ";
-    $query .= "`HotelName` = '$hotelName', ";
-    $query .= "`HotelDescription` = '$hotelDescription', ";
-    $query .= "`ContactNumber` = '$contactNumber', ";
-    $query .= "`ContactEmail` = '$contactEmail', ";
-    $query .= "`StreetAddress` = '$streetAddress', ";
-    $query .= "`City` = '$city', ";
-    $query .= "`Postcode` = '$postCode', ";
-    $query .= "`Country` = '$country', ";
-    $query .= "`Price` = $price, ";
-    $query .= "`AvailableRooms` = $availableRooms ";
-    $query .= "WHERE `ID` = $ID";
+    $query .= "`HotelName`= ?, ";
+    $query .= "`HotelDescription`= ?, ";
+    $query .= "`ContactNumber`= ?, ";
+    $query .= "`ContactEmail`= ?, ";
+    $query .= "`StreetAddress`= ?, ";
+    $query .= "`City`= ?, ";
+    $query .= "`Postcode`= ?, ";
+    $query .= "`Country`= ?, ";
+    $query .= "`Price`= ?, ";
+    $query .= "`AvailableRooms`= ? ";
+    $query .= "WHERE `ID`= ?;";
 
-    $conn->query($query);
+    $query = $conn->prepare($query);
+    $query->bind_param("ssssssssdii", $hotelName, $hotelDescription, $contactNumber, $contactEmail, $streetAddress, $city, $postCode, $country, $price, $availableRooms, $ID);
+    $query->execute();
     $conn->close();
 }
 
 function deleteHotel($ID) {
     $conn = database_connect();
-    $query = "DELETE FROM `Hotel` WHERE `ID` = $ID;";
-    $conn->query($query);
+    $query = "DELETE FROM `Hotel` WHERE `ID` = ?;";
+    $query = $conn->prepare($query);
+    $query->bind_param("i", $ID);
+    $query->execute();
     $conn->close();
 }
 
@@ -179,8 +212,11 @@ function deleteHotel($ID) {
 
 function imageExists($imageID) {
     $conn = database_connect();
-    $query = "SELECT `ID` FROM `Gallery` WHERE `ID` = $imageID;";
-    $results = $conn->query($query);
+    $query = "SELECT `ID` FROM `Gallery` WHERE `ID` = ?;";
+    $query = $conn->prepare($query);
+    $query->bind_param("i", $imageID);
+    $query->execute();
+    $results = $query->get_result();
     $conn->close();
 
     if ($results->num_rows > 0) {
@@ -191,8 +227,11 @@ function imageExists($imageID) {
 
 function fetchTotalHotelImages($hotelID) {
     $conn = database_connect();
-    $query = "SELECT COUNT(`ID`) FROM `Gallery` WHERE `HotelID` = $hotelID;";
-    $result = $conn->query($query);
+    $query = "SELECT COUNT(`ID`) FROM `Gallery` WHERE `HotelID` = ?;";
+    $query = $conn->prepare($query);
+    $query->bind_param("i", $hotelID);
+    $query->execute();
+    $result = $query->get_result();
     $total = $result->fetch_column(0);
     $conn->close();
     return $total;
@@ -200,16 +239,22 @@ function fetchTotalHotelImages($hotelID) {
 
 function fetchHotelImages($hotelID) {
     $conn = database_connect();
-    $query = "SELECT * FROM `Gallery` WHERE `HotelID` = $hotelID;";
-    $results = $conn->query($query);
+    $query = "SELECT * FROM `Gallery` WHERE `HotelID` = ?";
+    $query = $conn->prepare($query);
+    $query->bind_param("i", $hotelID);
+    $query->execute();
+    $results = $query->get_result();
     $conn->close();
     return $results->fetch_all(MYSQLI_ASSOC);
 }
 
 function fetchImage($imageID) {
     $conn = database_connect();
-    $query = "SELECT * FROM `Gallery` WHERE `ID` = $imageID;";
-    $results = $conn->query($query);
+    $query = "SELECT * FROM `Gallery` WHERE `ID` = ?;";
+    $query = $conn->prepare($query);
+    $query->bind_param("i", $imageID);
+    $query->execute();
+    $results = $query->get_result();
     $conn->close();
     return $results->fetch_assoc();
 }
@@ -218,22 +263,29 @@ function uploadImage($hotelID, $imageURL) {
     $conn = database_connect();
     $query = "INSERT INTO `Gallery` ";
     $query .= "(`HotelID`, `ImageURL`, `PrimaryImage`) ";
-    $query .= "VALUES($hotelID, '$imageURL', 0);";
-    $conn->query($query);
+    $query .= "VALUES(?, ?, 0);";
+    $query = $conn->prepare($query);
+    $query->bind_param("is", $hotelID, $imageURL);
+    $query->execute();
     $conn->close();
 }
 
 function deleteImage($imageID) {
     $conn = database_connect();
-    $query = "DELETE FROM `Gallery` WHERE `ID` = $imageID;";
-    $conn->query($query);
+    $query = "DELETE FROM `Gallery` WHERE `ID` = ?;";
+    $query = $conn->prepare($query);
+    $query->bind_param("i", $imageID);
+    $query->execute();
     $conn->close();
 }
 
 function fetchHotelPrimaryImage($hotelID) {
     $conn = database_connect();
-    $query = "SELECT * FROM `Gallery` WHERE `HotelID` = $hotelID AND `PrimaryImage` = 1;";
-    $results = $conn->query($query);
+    $query = "SELECT * FROM `Gallery` WHERE `HotelID` = ? AND `PrimaryImage` = 1;";
+    $query = $conn->prepare($query);
+    $query->bind_param("i", $hotelID);
+    $query->execute();
+    $results = $query->get_result();
     $conn->close();
 
     // If no primary image is set, return first hotel image
@@ -262,8 +314,11 @@ function fetchHotelPrimaryImage($hotelID) {
 
 function isPrimaryImage($imageID, $hotelID) {
     $conn = database_connect();
-    $query = "SELECT `PrimaryImage` FROM `Gallery` WHERE `ID` = $imageID AND `HotelID` = $hotelID;";
-    $results = $conn->query($query);
+    $query = "SELECT `PrimaryImage` FROM `Gallery` WHERE `ID` = ? AND `HotelID` = ?;";
+    $query = $conn->prepare($query);
+    $query->bind_param("ii", $imageID, $hotelID);
+    $query->execute();
+    $results = $query->get_result();
     $primaryImage = $results->fetch_column(0);
 
     if ($primaryImage == 1) {
@@ -277,12 +332,16 @@ function setPrimaryImage($imageID, $hotelID) {
 
     // Set all images in hotel gallery to not primary
     // This ensures that there aren't 2 primary images
-    $query = "UPDATE `Gallery` SET `PrimaryImage` = 0 WHERE `HotelID` = $hotelID;";
-    $conn->query($query);
+    $query = "UPDATE `Gallery` SET `PrimaryImage` = 0 WHERE `HotelID` = ?;";
+    $query = $conn->prepare($query);
+    $query->bind_param("i", $hotelID);
+    $query->execute();
 
     // Set selected image to primary image
-    $query = "UPDATE `Gallery` SET `PrimaryImage` = 1 WHERE `ID` = $imageID;";
-    $conn->query($query);
+    $query = "UPDATE `Gallery` SET `PrimaryImage` = 1 WHERE `ID` = ?;";
+    $query = $conn->prepare($query);
+    $query->bind_param("i", $imageID);
+    $query->execute();
 
     $conn->close();
 }
@@ -290,8 +349,10 @@ function setPrimaryImage($imageID, $hotelID) {
 function clearHotelGallery($hotelID) {
     $conn = database_connect();
 
-    $query = "DELETE FROM `Gallery` WHERE `HotelID` = $hotelID";
-    $conn->query($query);
+    $query = "DELETE FROM `Gallery` WHERE `HotelID` = ?";
+    $query = $conn->prepare($query);
+    $query->bind_param("i", $hotelID);
+    $query->execute();
 
     $conn->close();
 }
@@ -303,18 +364,25 @@ function submitSupportRequest($customerEmail, $requestSubject, $requestMessage) 
     
     $query = "INSERT INTO `SupportRequest` ";
     $query .= "(`Email`, `RequestSubject`, `RequestMessage`) ";
-    $query .= "VALUES ('$customerEmail', '$requestSubject', '$requestMessage');";
+    $query .= "VALUES (?, ?, ?);";
 
-    $conn->query($query);
+    $query = $conn->prepare($query);
+    $query->bind_param("sss", $customerEmail, $requestSubject, $requestMessage);
+    $query->execute();
+
     $conn->close();
 }
 
 function supportRequestExists($ID) {
     $conn = database_connect();
 
-    $query = "SELECT * FROM `SupportRequest` WHERE `ID` = $ID;";
+    $query = "SELECT * FROM `SupportRequest` WHERE `ID` = ?";
 
-    $results = $conn->query($query);
+    $query = $conn->prepare($query);
+    $query->bind_param("i", $ID);
+    $query->execute();
+    $results = $query->get_result();
+
     $conn->close();
 
     if ($results->num_rows > 0) {
@@ -346,8 +414,13 @@ function fetchAllSupportRequests($resolved=null) {
 function fetchSupportRequest($ID) {
     $conn = database_connect();
     
-    $query = "SELECT * FROM `SupportRequest` WHERE `ID` = $ID;";
-    $results = $conn->query($query);
+    $query = "SELECT * FROM `SupportRequest` WHERE `ID` = ?;";
+    
+    $query = $conn->prepare($query);
+    $query->bind_param("i", $ID);
+    $query->execute();
+    $results = $query->get_result();
+
     $conn->close();
 
     return $results->fetch_assoc();
@@ -356,8 +429,13 @@ function fetchSupportRequest($ID) {
 function fetchSupportRequestsByEmail($email) {
     $conn = database_connect();
 
-    $query = "SELECT * FROM `SupportRequest` WHERE `Email` = '$email';";
-    $results = $conn->query($query);
+    $query = "SELECT * FROM `SupportRequest` WHERE `Email` = ?;";
+    
+    $query = $conn->prepare($query);
+    $query->bind_param("s", $email);
+    $query->execute();
+    $results = $query->get_result();
+
     $conn->close();
 
     return $results->fetch_all(MYSQLI_ASSOC);
@@ -366,8 +444,11 @@ function fetchSupportRequestsByEmail($email) {
 function resolveSupportRequest($ID) {
     $conn = database_connect();
 
-    $query = "UPDATE `SupportRequest` SET `Resolved` = 1 WHERE `ID` = $ID;";
-    $conn->query($query);
+    $query = "UPDATE `SupportRequest` SET `Resolved` = 1 WHERE `ID` = ?;";
+    
+    $query = $conn->prepare($query);
+    $query->bind_param("i", $ID);
+    $query->execute();
     
     $conn->close();
 }
@@ -375,8 +456,11 @@ function resolveSupportRequest($ID) {
 function unresolveSupportRequest($ID) {
     $conn = database_connect();
 
-    $query = "UPDATE `SupportRequest` SET `Resolved` = 0 WHERE `ID` = $ID;";
-    $conn->query($query);
+    $query = "UPDATE `SupportRequest` SET `Resolved` = 0 WHERE `ID` = ?;";
+    
+    $query = $conn->prepare($query);
+    $query->bind_param("i", $ID);
+    $query->execute();
 
     $conn->close();
 }
