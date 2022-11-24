@@ -464,4 +464,47 @@ function unresolveSupportRequest($ID) {
 
     $conn->close();
 }
+
+// Review Functions
+function getHotelAvgRating($hotelID) {
+    $conn = database_connect();
+    $query = "SELECT AVG(`Rating`) FROM `Review` WHERE `HotelID` = ?;";
+    
+    $query = $conn->prepare($query);
+    $query->bind_param("i", $hotelID);
+    $query->execute();
+    $result = $query->get_result();
+    $conn->close();
+
+    $result = $result->fetch_array()[0];
+
+    if($result === null) {
+        return 0;
+    }
+
+    return round($result);
+}
+
+function fetchHotelReviews($hotelID) {
+    $conn = database_connect();
+    $query = "SELECT `Review`.`Review`, `Review`.`Rating`, `Customer`.`FirstName`, `Customer`.`LastName` FROM `Review` INNER JOIN `Customer` ON `Review`.`CustomerID`=`Customer`.`ID` WHERE `HotelID` = ?;";
+
+    $query = $conn->prepare($query);
+    $query->bind_param("i", $hotelID);
+    $query->execute();
+    $results = $query->get_result();
+
+    return $results->fetch_all(MYSQLI_ASSOC);
+}
+
+function createReview($customerID, $hotelID, $rating, $review) {
+    $conn = database_connect();
+    $query = "INSERT INTO `Review` (`CustomerID`, `HotelID`, `Rating`, `Review`) VALUES (?,?,?,?);";
+    
+    $query = $conn->prepare($query);
+    $query->bind_param("iiis", $customerID, $hotelID, $rating, $review);
+    $query->execute();
+
+    $conn->close();
+}
 ?>

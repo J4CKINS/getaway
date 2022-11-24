@@ -1,0 +1,34 @@
+#review #rating {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+#review form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+#review form textarea {
+    width: 100%;
+    height: 500px;
+    resize: none;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+#review form button {
+    border: none;
+}
+
+@media only screen and (max-width: 500px) {
+    #review form textarea {
+        height: 50vh;
+    }
+    #review form button {
+        width: 100%;
+    }
+}
