@@ -10,6 +10,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $uploadsFolderPath = __DIR__ . "/../..";
             $imageFiles = fetchHotelImages($_POST["hotelID"]);
             
+            // Delete all hotel revires
+            clearHotelReviews($_POST["hotelID"]);
+
             // Remove gallery entries from database
             clearHotelGallery($_POST["hotelID"]);
             

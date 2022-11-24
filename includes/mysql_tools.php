@@ -518,4 +518,15 @@ function clearCustomerReviews($customerID) {
 
     $conn->close();
 }
+
+function clearHotelReviews($hotelID) {
+    $conn = database_connect();
+    
+    $query = "DELETE FROM `Review` WHERE `HotelID` = ?;";
+    $query = $conn->prepare($query);
+    $query->bind_param("i", $hotelID);
+    $query->execute();
+
+    $conn->close();
+}
 ?>
