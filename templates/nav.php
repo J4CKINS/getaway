@@ -14,7 +14,7 @@ require_once(__DIR__ . "/../includes/auth_admin.php");
             <p id="title" class="clickable">Getaway</p>
             <ul>
                 <li class="clickable"><a href="/">Home</a></li>
-                <li class="clickable">Hotels</li>
+                <li class="clickable"><a href="/hotels/">Hotels</a></li>
                 <li class="clickable"><a href="/support.php">Contact Us</a></li>
             </ul>
             <span>
@@ -24,7 +24,7 @@ require_once(__DIR__ . "/../includes/auth_admin.php");
         </nav>
         <div id="mobile-nav">
             <a href="/">Home</a>
-            <a>Hotels</a>
+            <a href="/hotels/">Hotels</a>
             <a href="/support.php">Contact Us</a>
             <img src="/static/img/icons/expand_less_white.svg" onclick="toggleMobileNav();"/>
         </div>
