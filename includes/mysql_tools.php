@@ -507,4 +507,15 @@ function createReview($customerID, $hotelID, $rating, $review) {
 
     $conn->close();
 }
+
+function clearCustomerReviews($customerID) {
+    $conn = database_connect();
+
+    $query = "DELETE FROM `Review` WHERE `CustomerID` = ?;";
+    $query = $conn->prepare($query);
+    $query->bind_param("i", $customerID);
+    $query->execute();
+
+    $conn->close();
+}
 ?>
