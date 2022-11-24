@@ -1,14 +1,5 @@
 <?php
-include __DIR__ . "/includes/session.php";
 include __DIR__ . "/includes/mysql_tools.php";
-include __DIR__ . "/includes/auth_customer.php";
-
-if(!authCustomer()) {
-    header("Location: /login.php");
-    return;
-}
-
-$customerEmail = fetchCustomerData($_SESSION["customerID"])["Email"];
 
 // Handle POST requests
 if($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -32,11 +23,10 @@ if($_SERVER["REQUEST_METHOD"] === "POST") {
         <div class="wrapper">
             <section>
                 <h1>Contact Us</h1>
-                <p><u>Logged in as: <?php echo $customerEmail; ?></u></p>
             </section>
             <section>
                 <form method="POST">
-                    <input type="hidden" name="email" value="<?php echo $customerEmail ?>"/>
+                    <input type="email" name="email" placeholder="Email" maxlength="255" required/>
                     <input type="text" name="message_subject" placeholder="Message Subject" maxlength="255" required/>
                     <textarea name="message" placeholder="Message" maxlength="2048" required></textarea>
                     <button type="submit">Submit</button>
