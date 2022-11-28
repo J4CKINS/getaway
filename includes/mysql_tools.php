@@ -529,4 +529,119 @@ function clearHotelReviews($hotelID) {
 
     $conn->close();
 }
+
+
+// BOOKING FUNCTIONS
+
+function getAvailableRooms($hotelID, $dateFrom, $dateTo) {
+    $conn = database_connect();
+
+    // Get number of bookings made for that hotel in specific date range
+    $query = "SELECT COUNT(`ID`) FROM `Booking` WHERE `HotelID` = ? AND ((`DateFrom` < ? AND `DateTo` > ?) OR (`DateFrom` < ? AND `DateTo` > ?));";
+    $query = $conn->prepare($query);
+    $query->bind_param("issss", $hotelID, $dateFrom, $dateFrom, $dateTo, $dateTo);
+    $query->execute();
+    $bookings = $query->get_result();
+    $bookings = $bookings->fetch_array()[0];
+
+    // Get number of rooms that the hotel has
+    $query = "SELECT `AvailableRooms` From `Hotel` WHERE `ID` = ?;";
+    $query = $conn->prepare($query);
+    $query->bind_param("i", $hotelID);
+    $query->execute();
+    $result = $query->get_result();
+    $hotelRooms = $result->fetch_array()[0];
+
+    $conn->close();
+
+    // Return the number of rooms available to book
+    return $hotelRooms - $bookings;
+}
+
+function createBooking($customerID, $hotelID, $dateFrom, $dateTo, $guests) {
+    $conn = database_connect();
+
+    $query = "INSERT INTO `Booking` ";
+    $query .= "(`CustomerID`, `HotelID`, `DateFrom`, `DateTo`, `Guests`) ";
+    $query .= "VALUES (?,?,?,?,?);";
+    $query = $conn->prepare($query);
+    $query->bind_param("iissi", $customerID, $hotelID, $dateFrom, $dateTo, $guests);
+    $query->execute();
+    $conn->close();
+}
+
+function deleteBooking($bookingID) {
+    $conn = database_connect();
+
+    $query = "DELETE FROM `Booking` WHERE `ID` = ?;";
+    $query = $conn->prepare($query);
+    $query->bind_param("i", $bookingID);
+    $query->execute();
+
+    $conn->close();
+}
+
+function deleteAllCustomerBookings($customerID) {
+    $conn = database_connect();
+
+    $query = "DELETE FROM `Booking` WHERE `CustomerID` = ?;";
+    $query = $conn->prepare($query);
+    $query->bind_param("i", $customerID);
+    $query->execute();
+
+    $conn->close();
+}
+
+function deleteAllHotelBookings($hotelID) {
+    $conn = database_connect();
+
+    $query = "DELETE FROM `Booking` WHERE `HotelID` = ?;";
+    $query = $conn->prepare($query);
+    $query->bind_param("i", $hotelID);
+    $query->execute();
+
+    $conn->close();
+}
+
+function fetchUpcomingBookings($customerID) {
+    $conn = database_connect();
+    
+    // Fetch the current date
+    $currentDate = date("Y-m-d");
+
+    $query =  "SELECT `Booking`.*, `Hotel`.`HotelName` FROM `Booking` ";
+    $query .= "INNER JOIN `Hotel` ON `Booking`.`HotelID` = `Hotel`.`ID` ";
+    $query .= "WHERE `CustomerID` = ? AND `DateFrom` > ? ";
+    $query .= "ORDER BY `DateFrom` DESC;";
+    $query = $conn->prepare($query);
+    $query->bind_param("is", $customerID, $currentDate);
+    $query->execute();
+    
+    $results = $query->get_result();
+
+    $conn->close();
+
+    return $results->fetch_all(MYSQLI_ASSOC);
+}
+
+function fetchPreviousBookings($customerID) {
+    $conn = database_connect();
+    
+    // Fetch the current date
+    $currentDate = date("Y-m-d");
+
+    $query =  "SELECT `Booking`.*, `Hotel`.`HotelName` FROM `Booking` ";
+    $query .= "INNER JOIN `Hotel` ON `Booking`.`HotelID` = `Hotel`.`ID` ";
+    $query .= "WHERE `CustomerID` = ? AND `DateFrom` <= ? ";
+    $query .= "ORDER BY `DateFrom` DESC;";
+    $query = $conn->prepare($query);
+    $query->bind_param("is", $customerID, $currentDate);
+    $query->execute();
+    
+    $results = $query->get_result();
+
+    $conn->close();
+
+    return $results->fetch_all(MYSQLI_ASSOC);
+}
 ?>
