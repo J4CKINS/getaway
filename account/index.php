@@ -64,6 +64,7 @@ if ($accountData === null) { header("Location: /login.php"); return; } // Redire
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
     if (authCustomer()) {
         clearCustomerReviews($_SESSION["customerID"]);
+        deleteAllCustomerBookings($_SESSION["customerID"]);
         deleteCustomerAccount($_SESSION["customerID"]);
         unset($_SESSION["customerID"]);
         header("Location: /");
