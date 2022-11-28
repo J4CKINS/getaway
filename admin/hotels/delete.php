@@ -21,6 +21,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             unlink($uploadsFolderPath . $image["ImageURL"]);
             }
 
+            // Delete all bookings
+            deleteAllHotelBookings($_POST["hotelID"]);
+
             deleteHotel($_POST["hotelID"]); // Remove hotel from database
 
             header("Location: /admin/hotels/");
