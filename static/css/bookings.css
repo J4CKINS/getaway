@@ -1,0 +1,35 @@
+.booking-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.booking-list .booking {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #ebebeb;
+}
+.booking-list .booking:last-child { margin-bottom: 0px; }
+.booking-list .booking .col-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    width: fit-content;
+}
+.booking-list .booking .col-left * {
+    margin-right: 20px;
+}
+.booking-list .booking .col-left *:last-child {
+    margin-right: 0px;
+}
+
+.booking-list .booking .col-right button {
+    border: none;
+    background-color: #c23616;
+}
