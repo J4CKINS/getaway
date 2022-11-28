@@ -49,7 +49,8 @@ $hotel = fetchHotelData($_GET["id"]);
                                 <?php endfor; ?>
                             </div>
                         </div>
-                        <form>
+                        <form action="book.php">
+                            <input type="hidden" name="hotelID" value="<?php echo $hotel["ID"]; ?>"/>
                             <button type="submit">Book Now</button>
                         </form>
                     </div>
@@ -84,7 +85,8 @@ $hotel = fetchHotelData($_GET["id"]);
                                 </div>
                             </div>
                         </div>
-                        <form>
+                        <form action="book.php">
+                            <input type="hidden" name="hotelID" value="<?php echo $hotel["ID"]; ?>"/>
                             <button type="submit">Book Now</button>
                         </form>
                     </div>
