@@ -33,7 +33,7 @@ CREATE TABLE Booking (
     ID          INT NOT NULL UNIQUE AUTO_INCREMENT,
     CustomerID  INT NOT NULL,
     HotelID     INT NOT NULL,
-    Datefrom    DATE NOT NULL,
+    DateFrom    DATE NOT NULL,
     DateTo      DATE NOT NULL,
     Guests      TINYINT NOT NULL,
     PRIMARY KEY (ID),
