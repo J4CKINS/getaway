@@ -1,0 +1,120 @@
+header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 400px;
+    background-image: url("/static/img/header_image.jpg");
+    background-position-x: center;
+    background-position-y: center;
+    background-size: cover;
+}
+header p {
+    font-size: 30px;
+    font-weight:bold;
+    color: #fff;
+    text-shadow: 4px 4px 4px #00000077;
+}
+header #header-title {
+    font-size: 70px;
+}
+
+#hotels {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #000;
+}
+
+
+#hotels .hotel {
+    display: flex;
+    flex-direction: row;
+    width: 49%;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #ebebeb;
+    box-shadow: 4px 4px 10px #00000077;
+}
+
+#hotels .hotel .showcase-image {
+    min-width: 200px;
+    min-height: 200px;
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: cover;
+    margin-right: 10px;
+}
+#hotels .hotel .info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+}
+#hotels .hotel .info-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+#hotels .hotel .info-item img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+#hotels .hotel .info .bottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+#hotels .hotel .info .bottom img {
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
+}
+
+@media only screen and (max-width: 1000px) {
+    #hotels .hotel {
+        flex-direction: column;
+    }
+    #hotels .hotel .showcase-image {
+        max-width: unset;
+        width: 100%;
+    }
+}
+@media only screen and (max-width: 650px) {
+    #hotels {
+        flex-direction: column;
+    }
+    #hotels .hotel {
+        width: 100%;
+    }
+    #hotels .hotel .info .bottom {
+        flex-direction: column;
+    }
+    #hotels .hotel .info .bottom .rating {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 5px;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    #hotels .hotel .info .bottom .rating img {
+        margin: 0px;
+    }
+    #hotels .hotel .info .bottom form {
+        width: 100%;
+    }
+    #hotels .hotel .info .bottom form button {
+        width: 100%;
+    }
+}

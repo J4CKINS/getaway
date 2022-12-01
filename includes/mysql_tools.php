@@ -208,6 +208,24 @@ function deleteHotel($ID) {
     $conn->close();
 }
 
+function fetchIndexPageHotels() {
+    $conn = database_connect();
+
+    $query  = "SELECT `Hotel`.*, IFNULL(AVG(`Review`.`Rating`), 0) AS 'AverageRating' ";
+    $query .= "FROM `Hotel` ";
+    $query .= "LEFT JOIN `Review` ON `Hotel`.`ID` = `Review`.`HotelID` ";
+    $query .= "GROUP BY `Hotel`.`HotelName` ";
+    $query .= "ORDER BY `AverageRating` DESC LIMIT 4;";
+    
+    $query = $conn->prepare($query);
+    $query->execute();
+    $results = $query->get_result();
+
+    $conn->close();
+
+    return $results->fetch_all(MYSQLI_ASSOC);
+}
+
 // GALLERY FUNCTIONS
 
 function imageExists($imageID) {
