@@ -32,7 +32,7 @@ require_once(__DIR__ . "/../includes/auth_admin.php");
         <div id="account-menu">
             <?php if(isset($_SESSION["customerID"]) and customerAccountExists($_SESSION["customerID"])): ?>
                 <a href="/account/">Account Information</a>
-                <a>View Bookings</a>
+                <a href="/account/bookings/">View Bookings</a>
                 <a href="/logout.php">Logout</a>
             <?php else: ?>
                 <a href="/login.php">Login</a>
