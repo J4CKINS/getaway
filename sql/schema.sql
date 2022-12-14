@@ -1,5 +1,5 @@
-CREATE DATABASE Getaway;
-USE Getaway;
+CREATE DATABASE S21119277;
+USE S21119277;
 
 -- Customer Accounts
 CREATE TABLE Customer (

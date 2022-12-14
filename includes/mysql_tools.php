@@ -4,7 +4,7 @@ function database_connect() {
         "localhost",
         "getaway_app",
         "password",
-        "getaway"
+        "S21119277"
     );
 
     if ($conn->connect_error) {
